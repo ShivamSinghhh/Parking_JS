@@ -1,6 +1,7 @@
 
-    
-let parkingSchema = {
+ export default function setLocalStorage()
+ {   
+let parkingZone = {
     "bike": {
         "max" : 10,
         "avail" : 10
@@ -9,30 +10,30 @@ let parkingSchema = {
         "max" : 5,
         "avail" : 5
     },
-    "tempo": { "max" : 4,
+    "truck": { "max" : 4,
         "avail" : 4
 
     }
 }
 
 
-localStorage.setItem("parking",JSON.stringify(parkingSchema))
+localStorage.setItem("parkingZone",JSON.stringify(parkingZone))
 
-let carSlotSchema = new Array(parkingSchema.car.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
+let carSlot = new Array(parkingZone.car.max).fill({ "avail": true, "username":null, "userId": null, "entry": null, "exit": null, "rate": null });
 
-localStorage.setItem("carSlot",JSON.stringify(carSlotSchema))
+localStorage.setItem("carSlot",JSON.stringify(carSlot))
 
-let bikeSlotSchema = new Array(parkingSchema.bike.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
+let bikeSlot = new Array(parkingZone.bike.max).fill({ "avail": true, "username":null, "userId": null, "entry": null, "exit": null, "rate": null });
 
-localStorage.setItem("bikeSlot",JSON.stringify(bikeSlotSchema))
-
-
-let tempoSlotSchema = new Array(parkingSchema.tempo.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
-
-localStorage.setItem("tempoSlot",JSON.stringify(tempoSlotSchema))
+localStorage.setItem("bikeSlot",JSON.stringify(bikeSlot))
 
 
-    
+let truckSlot = new Array(parkingZone.truck.max).fill({ "avail": true, "username":null, "userId": null, "entry": null, "exit": null, "rate": null });
+
+localStorage.setItem("truckSlot",JSON.stringify(truckSlot))
+
+ }
+
 
 
 

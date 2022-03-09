@@ -7,10 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parking</title>
     <style>
+        *{
+            align-items: center;
+        }
         .parking {
             display: flex;
             width: 80%;
-            height: 100px;
+            height: 200px;
             /* border: 2px solid salmon; */
             justify-content: space-around;
         }
@@ -20,237 +23,389 @@
             width: 25%;
             border: 2px solid teal;
         }
+        .container{
+            margin: auto 100px;
+        }
     </style>
+
+
 
 </head>
 
 <body>
-    <h2>Parking Availability</h2>
+
+    
+    <div class="container">
+        <h1>Parking Management</h1>
+        <div class="row">
+            <h2>Entry Form</h2>
     <form action="">
-        <input id="user" type="text" placeholder="user">
+        <input id="user" type="text" placeholder="username">
         <select name="" id="type">
-            <option value="">Select</option>
+            <option>Select</option>
             <option value="car">Car</option>
             <option value="bike">Bike</option>
-            <option value="tempo">Tempo</option>
+            <option value="truck">Truck</option>
         </select>
         <input id="numPlate" type="text" placeholder="vehicle number">
         <button id="entry" onclick="bookParking(event)">Enter</button>
     </form>
+</div>
     <br>
-
+   <div class="row">
+       <h2>Exit Form</h2>
     <form action="">
         <input id="token" type="text" placeholder="Token">
         <select id="typeExit" name="" id="">
             <option value="">Select</option>
             <option value="car">Car</option>
             <option value="bike">Bike</option>
-            <option value="tempo">Tempo</option>
+            <option value="truck">Truck</option>
         </select>
-        <!-- <input type="text" placeholder="vehicle number">        -->
         <button id="exit" onclick="exitParking(event)">Exit</button>
     </form>
     <br>
     <div class="parking">
         <div>
-            <h3>Car <span>Rate: ₹40/2hr </span></h3>
-            <span>Availability &nbsp; = &nbsp; </span>
-            <span id="carNum"></span>
-        </div>
-        <div>
-            <h3>Bike <span>Rate: ₹10/2hr </span></h3>
+            <h3>Bike Parking </h3>
+            <h4>Rate: ₹ 10/2hr</h4>
+            <hr />
+            <p>Max Capacity = <span id="maxBike"></span></p>
             <span>Availability &nbsp; = &nbsp; </span>
             <span id="bikeNum"></span>
+
         </div>
         <div>
-            <h3>Tempo <span>Rate: ₹30 / 2hr </span></h3>
+            <h3>Car Parking </h3>
+            <h4>Rate: ₹ 40/2hr</h4>
+            <hr />
+            <p>Max Capacity = <span id="maxCar"></span></p>
             <span>Availability &nbsp; = &nbsp; </span>
-            <span id="tempoNum"></span>
+            <span id="carNum"></span>
+
+        </div>
+        <div>
+            <h3>Truck Parking </h3>
+            <h4>Rate: ₹ 50/2hr</h4>
+            <hr />
+            <p>Max Capacity = <span id="maxTruck"></span></p>
+            <span>Availability &nbsp; = &nbsp; </span>
+            <span id="truckNum"></span>
+
         </div>
 
     </div>
+</div>
 
 </body>
 
 </html>
 
+<script type="module">
+
+    //-------setting local storage, if it is not there in local storage----//
+
+    import setLocalStorage from "./local.js";
+
+    if (localStorage.getItem("parkingZone") == undefined) { setLocalStorage() }
+
+    let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+
+    // import bookParking from "./bookParking.js"
+    // import bookBikeParking from "./bookBikeParking.js"
+    // import bookCarParking from "./bookCarParking.js"
+    // import bookTruckParking from "./bookTruckParking.js"
+
+
+
+    let span1 = document.getElementById("bikeNum")
+    span1.innerText = parkingZone.bike.avail;
+    let span1Max = document.getElementById("maxBike")
+    span1Max.innerText = parkingZone.bike.max;
+
+    let span2 = document.getElementById("carNum")
+    span2.innerText = parkingZone.car.avail;
+    let span2Max = document.getElementById("maxCar")
+    span2Max.innerText = parkingZone.car.max;
+
+    let span3 = document.getElementById("truckNum")
+    span3.innerText = parkingZone.truck.avail;
+    let span3Max = document.getElementById("maxTruck")
+    span3Max.innerText = parkingZone.truck.max;
+
+
+</script>
+
 <script>
-    // import  {parking,carSlot,bikeSlot,tempoSlot}  from  "./index.js"
-    let parking = JSON.parse(localStorage.getItem("parking"));
 
-    let span1 = document.getElementById("carNum")
-    span1.innerText = parking.car.avail;
-
-    let span2 = document.getElementById("bikeNum")
-    span2.innerText = parking.bike.avail;
-
-    let span3 = document.getElementById("tempoNum")
-    span3.innerText = parking.tempo.avail;
-
-
-
-
-    //---------entry-----------------//
-    // let inputEnt = document.getElementById("entry");
-    // inputEnt.addEventListener("click",bookParking);
+    //----------Entry in the parking------------------//
 
     function bookParking(e) {
         e.preventDefault();
-        let user = document.getElementById("user").value;
-        let type = document.getElementById("type").value;
-        let numPlate = document.getElementById("numPlate").value;
+
+        let user = document.getElementById("user");
+        let type = document.getElementById("type");
+        let numPlate = document.getElementById("numPlate");
 
         console.log(user, type, numPlate)
 
-        if (type === "car") {
-            function bookCarParking() {
-                if (parking.car.avail == 0) {
-                    window.alert("No Availability");
-                    return;
-                } else {
-                    let carSlot = JSON.parse(localStorage.getItem("carSlot"));
-                    for (let i = 0; i < carSlot.length; i++) {
-                        if (carSlot[i].avail === false) { continue }
-                        else {
-                            carSlot[i].avail = false;
-                            carSlot[i].userId = i;
-                            carSlot[i].entry = new Date().getMinutes();
-                            parking.car.avail = parking.car.avail - 1;
-                            localStorage.setItem("carSlot", JSON.stringify(carSlot));
-                            localStorage.setItem("parking", JSON.stringify(parking));
-                            window.alert(`userToken = ${i}`)
-                            span1.innerText = parking.car.avail;
-                            break;
+        if (type.value === "bike") { bookBikeParking() }
 
-                        }
-                    }
-                }
+        else if (type.value === "car") { bookCarParking() }
 
-            }
-            bookCarParking()
-        }
+        else if (type.value === "truck") { bookTruckParking() }
 
-       else if (type === "bike") {
-            function bookBikeParking() {
-                if (parking.car.avail == 0) {
-                    window.alert("No Availability");
-                    return;
-                } else {
-                    let carSlot = JSON.parse(localStorage.getItem("carSlot"));
-                    for (let i = 0; i < carSlot.length; i++) {
-                        if (carSlot[i].avail === false) { continue }
-                        else {
-                            carSlot[i].avail = false;
-                            carSlot[i].userId = i;
-                            carSlot[i].entry = new Date().getMinutes();
-                            parking.car.avail = parking.car.avail - 1;
-                            localStorage.setItem("carSlot", JSON.stringify(carSlot));
-                            localStorage.setItem("parking", JSON.stringify(parking));
-                            window.alert(`userToken = ${i}`)
-                            span1.innerText = parking.car.avail;
-                            break;
-
-                        }
-                    }
-                }
-
-            }
-            bookBikeParking()
-        }
-
-        user.innerText = "";
-        type.innerText = "";
-        numPlate = "";
+        document.getElementById("user").value = "";
+        document.getElementById('type').selectedIndex = 0;
+        document.getElementById("numPlate").value = "";
     }
+
+    //----------bike parking------------------------//
+    function bookBikeParking() {
+
+        let user = document.getElementById("user");
+        let type = document.getElementById("type");
+        let numPlate = document.getElementById("numPlate");
+
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span1 = document.getElementById("bikeNum")
+
+        if (parkingZone.bike.avail == 0) {
+            window.alert("No Availability");
+            return;
+        } else {
+            let bikeSlot = JSON.parse(localStorage.getItem("bikeSlot"));
+            for (let i = 0; i < bikeSlot.length; i++) {
+                if (bikeSlot[i].avail === false) { continue }
+                else {
+                    bikeSlot[i].avail = false;
+                    bikeSlot[i].username = user.value;
+                    bikeSlot[i].userId = i;
+                    bikeSlot[i].entry = new Date().getTime();
+                    parkingZone.bike.avail = parkingZone.bike.avail - 1;
+                    localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    window.alert(`Hello ${user.value}! Thank you for parking your Bike. your userToken = ${i}.`)
+                    span1.innerText = parkingZone.bike.avail;
+                    break;
+
+                }
+            }
+        }
+
+
+    }
+
+    //-----------Car Parking----------------------//
+
+    function bookCarParking() {
+
+        let user = document.getElementById("user");
+        let type = document.getElementById("type");
+        let numPlate = document.getElementById("numPlate");
+
+
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span2 = document.getElementById("carNum")
+
+        if (parkingZone.car.avail == 0) {
+            window.alert("No Availability");
+            return;
+        } else {
+            let carSlot = JSON.parse(localStorage.getItem("carSlot"));
+            for (let i = 0; i < carSlot.length; i++) {
+                if (carSlot[i].avail === false) { continue }
+                else {
+                    carSlot[i].avail = false;
+                    carSlot[i].username = user.value;
+                    carSlot[i].userId = i;
+                    carSlot[i].entry = new Date().getTime();;
+                    parkingZone.car.avail = parkingZone.car.avail - 1;
+                    localStorage.setItem("carSlot", JSON.stringify(carSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    window.alert(`Hello ${user.value}! Thank you for parking your Car. your userToken = ${i}.`)
+                    span2.innerText = parkingZone.car.avail;
+                    break;
+
+                }
+            }
+        }
+
+    }
+
+    //----------book Truck Parking------------------//
+
+    function bookTruckParking() {
+
+        let user = document.getElementById("user");
+        let type = document.getElementById("type");
+        let numPlate = document.getElementById("numPlate");
+
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span3 = document.getElementById("truckNum")
+
+        if (parkingZone.truck.avail == 0) {
+            window.alert("No Availability");
+            return;
+        } else {
+            let truckSlot = JSON.parse(localStorage.getItem("truckSlot"));
+            for (let i = 0; i < truckSlot.length; i++) {
+                if (truckSlot[i].avail === false) { continue }
+                else {
+                    truckSlot[i].avail = false;
+                    truckSlot[i].username = user.value;
+                    truckSlot[i].userId = i;
+                    truckSlot[i].entry = new Date().getTime();;
+                    parkingZone.truck.avail = parkingZone.truck.avail - 1;
+                    localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    window.alert(`Hello ${user.value}! Thank you for parking your Truck., your userToken = ${i}.`)
+                    span3.innerText = parkingZone.truck.avail;
+                    break;
+
+                }
+            }
+        }
+
+    }
+
+    //--------------------------------Exit from the parking------------------------------------------//
 
     //-----------exit-------parking---------//
 
     function exitParking(e) {
         e.preventDefault();
         let token = document.getElementById("token").value;
-        let typeExit = document.getElementById("typeExit").value;
+        let typeExit = document.getElementById("typeExit").value;       
 
-        console.log(token, typeExit)
+        if (typeExit === "bike") { exitBikeParking(token) }
+        else if (typeExit === "car") { exitCarParking(token) }
+        else if (typeExit === "truck") { exitTruckParking(token) }
 
-        if (typeExit === "car") {
-            function exitCarParking() {
-                console.log("working")
-                // let flag = true;                   
-                let carSlot = JSON.parse(localStorage.getItem("carSlot"));
-                for (let i = 0; i < carSlot.length; i++) {
-                    if (i > token) { break }
-                    else if (token != i) { continue }
-                    else {
-                        if (carSlot[i].avail == true) { return (window.alert(`There is no Vehicle parked with this TokenID`)) }
-                        else {
-                            let rate = 5;
-                            let exitTime = new Date().getMinutes();
-                            let diff = exitTime - carSlot[i].entry;
-                            console.log("diff =", diff)
-                            let cost = rate * diff;
+         document.getElementById("token").value = "";
+         document.getElementById("typeExit").selectedIndex = 0;        
 
-                            carSlot[i].avail = true;
-                            carSlot[i].userId = null;
-                            carSlot[i].entry = null;
-                            parking.car.avail = parking.car.avail + 1;
-                            localStorage.setItem("carSlot", JSON.stringify(carSlot));
-                            localStorage.setItem("parking", JSON.stringify(parking));
-                            window.alert(`Please pay ₹ ${cost}`)
-                            span1.innerText = parking.car.avail;
-                            // flag = false;
-                            return;
-                        }
+    }
 
-                    }
+    //---------------exit bike parking---------------------//
+
+    function exitBikeParking(token) {
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span1 = document.getElementById("bikeNum")
+        let bikeSlot = JSON.parse(localStorage.getItem("bikeSlot"));
+        let flag = true;
+        for (let i = 0; i < bikeSlot.length; i++) {
+            if (i > token) { break }
+            else if (token != i) { continue }
+            else {
+                if (bikeSlot[i].avail == true) { break }
+                else {
+                    flag = false;
+                    let rate = 10;
+                    let exitTime = new Date().getTime();;
+                    let diff = exitTime - bikeSlot[i].entry;
+                    console.log(exitTime,bikeSlot[i].entry)
+                    diff = (diff)/(1000*60*60);
+                    console.log(diff)
+                    diff = Math.ceil(diff/2)
+                    let cost = rate * diff;
+                    window.alert(`Hello ${bikeSlot[i].username} Please pay ₹ ${cost}`)
+                    bikeSlot[i].avail = true;
+                    bikeSlot[i].userId = null;
+                    bikeSlot[i].username = null;
+                    bikeSlot[i].entry = null;
+                    parkingZone.bike.avail = parkingZone.bike.avail + 1;                   
+                    localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
+                    span1.innerText = parkingZone.bike.avail;                   
+                    break;
                 }
-                return (window.alert(`There is no Vehicle parked with this TokenID`))
 
             }
-            exitCarParking()
         }
+        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
+      
 
-        token.innerText = "";
-        typeExit.innerText = "";
+    }
+
+
+    //---------------exit car parking---------------------//
+
+    function exitCarParking(token) {
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span2 = document.getElementById("carNum")
+        let carSlot = JSON.parse(localStorage.getItem("carSlot"));
+        let flag = true;
+        for (let i = 0; i < carSlot.length; i++) {
+            if (i > token) { break }
+            else if (token != i) { continue }
+            else {
+                if (carSlot[i].avail == true) { break }
+                else {
+                    flag = false;
+                    let rate = 40;
+                    let exitTime = new Date().getTime();;
+                    let diff = exitTime - carSlot[i].entry;
+                    diff = (diff)/(1000*60*60);
+                    diff = Math.ceil(diff/2)
+                    let cost = rate * diff;
+                    window.alert(`Hello ${carSlot[i].username} Please pay ₹ ${cost}`)
+                    carSlot[i].avail = true;
+                    carSlot[i].userId = null;
+                    carSlot[i].username = null;
+                    carSlot[i].entry = null;
+                    parkingZone.car.avail = parkingZone.car.avail + 1;                   
+                    localStorage.setItem("carSlot", JSON.stringify(carSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
+                    span2.innerText = parkingZone.car.avail;                   
+                    break;
+                }
+
+            }
+        }
+        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
+      
+
+    }
+
+    //-------------------exit truck parking------------------------//
+    
+     function exitTruckParking(token) {
+        let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
+        let span3 = document.getElementById("truckNum")
+        let truckSlot = JSON.parse(localStorage.getItem("truckSlot"));
+        let flag = true;
+        for (let i = 0; i < truckSlot.length; i++) {
+            if (i > token) { break }
+            else if (token != i) { continue }
+            else {
+                if (truckSlot[i].avail == true) { break }
+                else {
+                    flag = false;
+                    let rate = 50;
+                    let exitTime = new Date().getTime();;
+                    let diff = exitTime - truckSlot[i].entry;
+                    diff = (diff)/(1000*60*60);
+                    diff = Math.ceil(diff/2)
+                    let cost = rate * diff;
+                    window.alert(`Hello ${truckSlot[i].username} Please pay ₹ ${cost}`)
+                    truckSlot[i].avail = true;
+                    truckSlot[i].userId = null;
+                    truckSlot[i].username = null;
+                    truckSlot[i].entry = null;
+                    parkingZone.truck.avail = parkingZone.truck.avail + 1;                   
+                    localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
+                    span3.innerText = parkingZone.truck.avail;                   
+                    break;
+                }
+
+            }
+        }
+        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
+      
 
     }
 
 
-
-</script>
-
-<script >
-    if(localStorage.getItem("parking") == undefined) {
-          
-let parkingSchema = {
-    "bike": {
-        "max" : 10,
-        "avail" : 10
-    },
-    "car": {
-        "max" : 5,
-        "avail" : 5
-    },
-    "tempo": { "max" : 4,
-        "avail" : 4
-
-    }
-}
-
-
-localStorage.setItem("parking",JSON.stringify(parkingSchema))
-
-let carSlotSchema = new Array(parkingSchema.car.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
-
-localStorage.setItem("carSlot",JSON.stringify(carSlotSchema))
-
-let bikeSlotSchema = new Array(parkingSchema.bike.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
-
-localStorage.setItem("bikeSlot",JSON.stringify(bikeSlotSchema))
-
-
-let tempoSlotSchema = new Array(parkingSchema.tempo.max).fill({ "avail": true, "userId": null, "entry": null, "exit": null, "rate": null });
-
-localStorage.setItem("tempoSlot",JSON.stringify(tempoSlotSchema))
-
-    }
 </script>
