@@ -139,17 +139,17 @@
     function bookParking(e) {
         e.preventDefault();
 
-        let user = document.getElementById("user");
-        let type = document.getElementById("type");
-        let numPlate = document.getElementById("numPlate");
+        let user = document.getElementById("user").value;
+        let type = document.getElementById("type").value;
+        let numPlate = document.getElementById("numPlate").value;
 
         console.log(user, type, numPlate)
 
-        if (type.value === "bike") { bookBikeParking() }
+        if (type.value === "bike") { bookBikeParking(user,type,numPlate) }
 
-        else if (type.value === "car") { bookCarParking() }
+        else if (type.value === "car") { bookCarParking(user,type,numPlate) }
 
-        else if (type.value === "truck") { bookTruckParking() }
+        else if (type.value === "truck") { bookTruckParking(user,type,numPlate) }
 
         document.getElementById("user").value = "";
         document.getElementById('type').selectedIndex = 0;
@@ -157,11 +157,7 @@
     }
 
     //----------bike parking------------------------//
-    function bookBikeParking() {
-
-        let user = document.getElementById("user");
-        let type = document.getElementById("type");
-        let numPlate = document.getElementById("numPlate");
+    function bookBikeParking(user,type,numPlate) {      
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span1 = document.getElementById("bikeNum")
@@ -177,6 +173,7 @@
                     bikeSlot[i].avail = false;
                     bikeSlot[i].username = user.value;
                     bikeSlot[i].userId = i;
+                    bikeSlot[i].vehicle_No = numPlate;
                     bikeSlot[i].entry = new Date().getTime();
                     parkingZone.bike.avail = parkingZone.bike.avail - 1;
                     localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
@@ -194,12 +191,7 @@
 
     //-----------Car Parking----------------------//
 
-    function bookCarParking() {
-
-        let user = document.getElementById("user");
-        let type = document.getElementById("type");
-        let numPlate = document.getElementById("numPlate");
-
+    function bookCarParking(user,type,numPlate) {
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span2 = document.getElementById("carNum")
@@ -215,6 +207,7 @@
                     carSlot[i].avail = false;
                     carSlot[i].username = user.value;
                     carSlot[i].userId = i;
+                    carSlot[i].vehicle_No = numPlate;
                     carSlot[i].entry = new Date().getTime();;
                     parkingZone.car.avail = parkingZone.car.avail - 1;
                     localStorage.setItem("carSlot", JSON.stringify(carSlot));
@@ -231,11 +224,7 @@
 
     //----------book Truck Parking------------------//
 
-    function bookTruckParking() {
-
-        let user = document.getElementById("user");
-        let type = document.getElementById("type");
-        let numPlate = document.getElementById("numPlate");
+    function bookTruckParking(user,type,numPlate) {
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span3 = document.getElementById("truckNum")
@@ -251,6 +240,7 @@
                     truckSlot[i].avail = false;
                     truckSlot[i].username = user.value;
                     truckSlot[i].userId = i;
+                    truckSlot[i].vehicle_No = numPlate;
                     truckSlot[i].entry = new Date().getTime();;
                     parkingZone.truck.avail = parkingZone.truck.avail - 1;
                     localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
@@ -305,10 +295,11 @@
                     console.log(diff)
                     diff = Math.ceil(diff/2)
                     let cost = rate * diff;
-                    window.alert(`Hello ${bikeSlot[i].username} Please pay ₹ ${cost}`)
+                    window.alert(`Hello ${bikeSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${bikeSlot[i].vehicle_No}`)
                     bikeSlot[i].avail = true;
                     bikeSlot[i].userId = null;
                     bikeSlot[i].username = null;
+                    bikeSlot[i].vehicle_No = null;
                     bikeSlot[i].entry = null;
                     parkingZone.bike.avail = parkingZone.bike.avail + 1;                   
                     localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
@@ -345,10 +336,11 @@
                     diff = (diff)/(1000*60*60);
                     diff = Math.ceil(diff/2)
                     let cost = rate * diff;
-                    window.alert(`Hello ${carSlot[i].username} Please pay ₹ ${cost}`)
+                    window.alert(`Hello ${carSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${carSlot[i].vehicle_No}`)
                     carSlot[i].avail = true;
                     carSlot[i].userId = null;
                     carSlot[i].username = null;
+                    carSlot[i].vehicle_No = null;
                     carSlot[i].entry = null;
                     parkingZone.car.avail = parkingZone.car.avail + 1;                   
                     localStorage.setItem("carSlot", JSON.stringify(carSlot));
@@ -384,10 +376,11 @@
                     diff = (diff)/(1000*60*60);
                     diff = Math.ceil(diff/2)
                     let cost = rate * diff;
-                    window.alert(`Hello ${truckSlot[i].username} Please pay ₹ ${cost}`)
+                    window.alert(`Hello ${truckSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${truckSlot[i].vehicle_No}`)
                     truckSlot[i].avail = true;
                     truckSlot[i].userId = null;
                     truckSlot[i].username = null;
+                    truckSlot[i].vehicle_No = null;
                     truckSlot[i].entry = null;
                     parkingZone.truck.avail = parkingZone.truck.avail + 1;                   
                     localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
