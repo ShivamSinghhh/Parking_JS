@@ -145,11 +145,11 @@
 
         console.log(user, type, numPlate)
 
-        if (type.value === "bike") { bookBikeParking(user,type,numPlate) }
+        if (type === "bike") { bookBikeParking(user,type,numPlate) }
 
-        else if (type.value === "car") { bookCarParking(user,type,numPlate) }
+        else if (type === "car") { bookCarParking(user,type,numPlate) }
 
-        else if (type.value === "truck") { bookTruckParking(user,type,numPlate) }
+        else if (type === "truck") { bookTruckParking(user,type,numPlate) }
 
         document.getElementById("user").value = "";
         document.getElementById('type').selectedIndex = 0;
@@ -171,14 +171,14 @@
                 if (bikeSlot[i].avail === false) { continue }
                 else {
                     bikeSlot[i].avail = false;
-                    bikeSlot[i].username = user.value;
+                    bikeSlot[i].username = user;
                     bikeSlot[i].userId = i;
                     bikeSlot[i].vehicle_No = numPlate;
                     bikeSlot[i].entry = new Date().getTime();
                     parkingZone.bike.avail = parkingZone.bike.avail - 1;
                     localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
-                    window.alert(`Hello ${user.value}! Thank you for parking your Bike. your userToken = ${i}.`)
+                    window.alert(`Hello ${user}! Thank you for parking your Bike. your userToken = ${i}.`)
                     span1.innerText = parkingZone.bike.avail;
                     break;
 
@@ -205,14 +205,14 @@
                 if (carSlot[i].avail === false) { continue }
                 else {
                     carSlot[i].avail = false;
-                    carSlot[i].username = user.value;
+                    carSlot[i].username = user;
                     carSlot[i].userId = i;
                     carSlot[i].vehicle_No = numPlate;
                     carSlot[i].entry = new Date().getTime();;
                     parkingZone.car.avail = parkingZone.car.avail - 1;
                     localStorage.setItem("carSlot", JSON.stringify(carSlot));
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
-                    window.alert(`Hello ${user.value}! Thank you for parking your Car. your userToken = ${i}.`)
+                    window.alert(`Hello ${user}! Thank you for parking your Car. your userToken = ${i}.`)
                     span2.innerText = parkingZone.car.avail;
                     break;
 
@@ -238,14 +238,14 @@
                 if (truckSlot[i].avail === false) { continue }
                 else {
                     truckSlot[i].avail = false;
-                    truckSlot[i].username = user.value;
+                    truckSlot[i].username = user;
                     truckSlot[i].userId = i;
                     truckSlot[i].vehicle_No = numPlate;
                     truckSlot[i].entry = new Date().getTime();;
                     parkingZone.truck.avail = parkingZone.truck.avail - 1;
                     localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
-                    window.alert(`Hello ${user.value}! Thank you for parking your Truck., your userToken = ${i}.`)
+                    window.alert(`Hello ${user}! Thank you for parking your Truck. your userToken = ${i}.`)
                     span3.innerText = parkingZone.truck.avail;
                     break;
 
@@ -283,7 +283,7 @@
         for (let i = 0; i < bikeSlot.length; i++) {
             if (i > token) { break }
             else if (token != i) { continue }
-            else {
+            else if (token == i) {
                 if (bikeSlot[i].avail == true) { break }
                 else {
                     flag = false;
@@ -326,7 +326,7 @@
         for (let i = 0; i < carSlot.length; i++) {
             if (i > token) { break }
             else if (token != i) { continue }
-            else {
+            else if (token == i) {
                 if (carSlot[i].avail == true) { break }
                 else {
                     flag = false;
@@ -366,7 +366,7 @@
         for (let i = 0; i < truckSlot.length; i++) {
             if (i > token) { break }
             else if (token != i) { continue }
-            else {
+            else if (token == i) {
                 if (truckSlot[i].avail == true) { break }
                 else {
                     flag = false;
