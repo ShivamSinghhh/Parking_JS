@@ -3,15 +3,15 @@
  {   
 let parkingZone = {
     "bike": {
-        "max" : 10,
-        "avail" : 10
+        "max" : 50,
+        "avail" : 50
     },
     "car": {
-        "max" : 5,
-        "avail" : 5
+        "max" : 20,
+        "avail" : 20
     },
-    "truck": { "max" : 4,
-        "avail" : 4
+    "truck": { "max" : 15,
+        "avail" : 15
 
     }
 }
