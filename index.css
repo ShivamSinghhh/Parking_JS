@@ -1,0 +1,109 @@
+
+        * {
+            font-family: sans-serif;  
+
+        }
+
+        .parking {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            height: 250px;
+            /* border: 2px solid salmon; */
+            justify-content: space-around;
+
+        }
+
+        .col-3 {
+            text-align: center;
+            /* border: 2px solid teal; */
+            margin:10px;
+            border-radius: 20px;
+            box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        }
+
+        .container {
+            margin: auto 60px;
+            text-align: center;
+            color: #263238;
+        }
+
+        .rowForm {
+            width: 30%;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 45% 45%;
+            justify-content: space-around;
+        }
+
+        .col-2 {
+           margin-top: 25px;
+           border-radius: 5px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+
+        #formDiv {
+            display: flex;
+            /* border: 1px solid red; */
+            justify-content: space-evenly;
+        }
+
+
+        input,
+        select {
+            width: 100%;
+            height: 30px;
+            margin: 10px 0;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+            
+        }
+
+        select {
+            width: 106%;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 106%;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        }
+
+        button:hover {
+            font-weight: 700;
+            font-size: larger;
+        }
+
+        .parkingSlot {
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }     
+
+        .disp-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border: 5px dashed salmon;
+            height: 800px;
+            overflow-y: auto;          
+        }
+
+        .disp-3 img {
+            width: 100%;
+        }
+
+        .disp-3>div {
+            text-align: justify;
+            padding-left: 5px;          
+
+        }
+    

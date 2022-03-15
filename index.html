@@ -6,104 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parking</title>
-    <style>
-        * {
-            font-family: sans-serif;
-        }
-
-        .parking {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            height: 250px;
-            border: 2px solid salmon;
-            justify-content: space-around;
-
-        }
-
-        .col-3 {
-            text-align: center;
-            border: 2px solid teal;
-        }
-
-        .container {
-            margin: auto 60px;
-            text-align: center;
-        }
-
-        .rowForm {
-            width: 30%;
-        }
-
-        .row {
-            display: grid;
-            grid-template-columns: 45% 45%;
-            justify-content: space-around;
-        }
-
-        .col-2 {
-            border: 1px solid black;
-        }
-
-        #formDiv {
-            display: flex;
-            border: 1px solid red;
-            justify-content: space-evenly;
-        }
-
-
-        input,
-        select {
-            width: 100%;
-            height: 30px;
-            margin: 10px 0;
-            padding: 0 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        select {
-            width: 106%;
-            border-radius: 5px;
-        }
-
-        button {
-            width: 106%;
-            height: 30px;
-            border: none;
-            cursor: pointer;
-            margin: 10px 0;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            font-weight: 700;
-            font-size: larger;
-        }
-
-        .parkingSlot {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-        }
-
-        .disp-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            border: 5px dashed salmon;
-        }
-
-        .disp-3 img {
-            width: 100%;
-        }
-
-        .disp-3>div {
-            text-align: justify;
-            padding-left: 5px;
-
-        }
-    </style>
-
-
+    
+    <link rel="stylesheet" href="index.css">
 
 </head>
 
@@ -231,10 +135,24 @@
     for (let i = 0; i < bikeSlot.length; i++) {
         let div = document.createElement("div");
         div.setAttribute("id", `bike${i}`);
-        div.style.height = "150px";
-        div.style.background = "green";
+        div.style.height = "180px";
         div.style.border = "1px solid blue";
-        bikeZone.append(div)
+
+        if (bikeSlot[i].avail) {
+            div.style.background = "#C8E6C9";
+        } else {
+            div.style.background = "#F8BBD0";
+            let img = document.createElement("img");
+            let p1 = document.createElement("p");
+            let p2 = document.createElement("p");
+            let p3 = document.createElement("p");
+            img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAQDW1svGOjuMgZWTRWCHxIdP9DhTcje19Og&usqp=CAU";
+            p1.innerText = `user : ${bikeSlot[i].username}`;
+            p2.innerText = `veh_No. : ${bikeSlot[i].vehicle_No}`;
+            div.append(img, p1, p2);
+        }
+
+        bikeZone.append(div);
     }
     //------------------CarZone--------------------//
     let carSlot = JSON.parse(localStorage.getItem("carSlot"));
@@ -243,22 +161,22 @@
         let div = document.createElement("div");
         div.setAttribute("id", `car${i}`);
         div.style.height = "180px";
-        div.style.border = "1px solid blue";
+        div.style.border = "1px solid blue";       
 
         if (carSlot[i].avail) {
-            div.style.background = "lightgreen";
+            div.style.background = "#C8E6C9";           
         } else {
-            div.style.background = "#F48FB1";
-            let img = document.createElement("img");
+            div.style.background = "#F8BBD0";           
             let p1 = document.createElement("p");
             let p2 = document.createElement("p");
             let p3 = document.createElement("p");
+            let img = document.createElement("img");
             img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9_Ufdi1GXC8jqzaYdNkNjB9fO20dqTVSo8A&usqp=CAU";
             p1.innerText = `user : ${carSlot[i].username}`;
-            p2.innerText = `veh_No. : ${carSlot[i].vehicle_No}`;          
+            p2.innerText = `veh_No. : ${carSlot[i].vehicle_No}`;
             div.append(img, p1, p2);
         }
-        
+
         carZone.append(div);
     }
 
@@ -268,10 +186,24 @@
     for (let i = 0; i < truckSlot.length; i++) {
         let div = document.createElement("div");
         div.setAttribute("id", `truck${i}`);
-        div.style.height = "150px";
-        div.style.background = "green";
+        div.style.height = "180px";
         div.style.border = "1px solid blue";
-        truckZone.append(div)
+
+        if (truckSlot[i].avail) {
+            div.style.background = "#C8E6C9";
+        } else {
+            div.style.background = "#F8BBD0";
+            let img = document.createElement("img");
+            let p1 = document.createElement("p");
+            let p2 = document.createElement("p");
+            let p3 = document.createElement("p");
+            img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTJBjFk-BBAtpaY683LJaXK5aB3Me4htlSkA&usqp=CAU";
+            p1.innerText = `user : ${truckSlot[i].username}`;
+            p2.innerText = `veh_No. : ${truckSlot[i].vehicle_No}`;
+            div.append(img, p1, p2);
+        }
+
+        truckZone.append(div);
     }
 
 
@@ -342,6 +274,18 @@
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
                     window.alert(`Hello ${user}! Thank you for parking your Bike. your userToken = ${i}.`)
                     span1.innerText = parkingZone.bike.avail;
+
+
+                    let div = document.getElementById(`bike${i}`);
+                    div.style.background = "#F8BBD0";
+                    let img = document.createElement("img");
+                    img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAQDW1svGOjuMgZWTRWCHxIdP9DhTcje19Og&usqp=CAU"
+
+                    let p1 = document.createElement("p");
+                    let p2 = document.createElement("p");
+                    p1.innerText = `user : ${user}`;
+                    p2.innerText = `veh_No. : ${numPlate}`;
+                    div.append(img, p1, p2);
                     break;
 
                 }
@@ -378,7 +322,7 @@
                     span2.innerText = parkingZone.car.avail;
 
                     let div = document.getElementById(`car${i}`);
-                    div.style.background = "#F48FB1";
+                    div.style.background = "#F8BBD0";
                     let img = document.createElement("img");
                     img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9_Ufdi1GXC8jqzaYdNkNjB9fO20dqTVSo8A&usqp=CAU"
 
@@ -420,6 +364,17 @@
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
                     window.alert(`Hello ${user}! Thank you for parking your Truck. your userToken = ${i}.`)
                     span3.innerText = parkingZone.truck.avail;
+
+                    let div = document.getElementById(`truck${i}`);
+                    div.style.background = "#F8BBD0";
+                    let img = document.createElement("img");
+                    img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTJBjFk-BBAtpaY683LJaXK5aB3Me4htlSkA&usqp=CAU"
+
+                    let p1 = document.createElement("p");
+                    let p2 = document.createElement("p");
+                    p1.innerText = `user : ${user}`;
+                    p2.innerText = `veh_No. : ${numPlate}`;
+                    div.append(img, p1, p2);
                     break;
 
                 }
@@ -479,6 +434,10 @@
                     localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
                     span1.innerText = parkingZone.bike.avail;
+
+                    let div = document.getElementById(`bike${i}`);
+                    div.style.background = "#C8E6C9";  
+                    div.innerText="";
                     break;
                 }
 
@@ -522,8 +481,8 @@
                     span2.innerText = parkingZone.car.avail;
 
                     let div = document.getElementById(`car${i}`);
-                    div.style.background = "lightgreen";
-                    div.innerText = "Vaccant";                    
+                    div.style.background = "#C8E6C9"; 
+                    div.innerText="";                   
                     break;
                 }
 
@@ -564,6 +523,10 @@
                     localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
                     span3.innerText = parkingZone.truck.avail;
+
+                    let div = document.getElementById(`truck${i}`);
+                    div.style.background = "#C8E6C9";  
+                    div.innerText="";
                     break;
                 }
 
