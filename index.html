@@ -7,25 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parking</title>
     <style>
-        *{
-            align-items: center;
+        * {
+            font-family: sans-serif;
         }
+
         .parking {
-            display: flex;
-            width: 80%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
             height: 250px;
-            /* border: 2px solid salmon; */
+            border: 2px solid salmon;
+            justify-content: space-around;
+
+        }
+
+        .col-3 {
+            text-align: center;
+            border: 2px solid teal;
+        }
+
+        .container {
+            margin: auto 60px;
+            text-align: center;
+        }
+
+        .rowForm {
+            width: 30%;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 45% 45%;
             justify-content: space-around;
         }
 
-        .parking>div {
-            text-align: center;
-            width: 25%;
-            border: 2px solid teal;
-            padding: 20px;
+        .col-2 {
+            border: 1px solid black;
         }
-        .container{
-            margin: auto 100px;
+
+        #formDiv {
+            display: flex;
+            border: 1px solid red;
+            justify-content: space-evenly;
+        }
+
+
+        input,
+        select {
+            width: 100%;
+            height: 30px;
+            margin: 10px 0;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        select {
+            width: 106%;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 106%;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            font-weight: 700;
+            font-size: larger;
+        }
+
+        .parkingSlot {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .disp-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border: 5px dashed salmon;
+        }
+
+        .disp-3 img {
+            width: 100%;
+        }
+
+        .disp-3>div {
+            text-align: justify;
+            padding-left: 5px;
+
         }
     </style>
 
@@ -35,68 +109,108 @@
 
 <body>
 
-    
+
     <div class="container">
         <h1>Parking Management</h1>
-        <div class="row">
-            <h2>Entry Form</h2>
-    <form action="">
-        <input id="user" type="text" placeholder="username">
-        <select name="" id="type">
-            <option>Select</option>
-            <option value="car">Car</option>
-            <option value="bike">Bike</option>
-            <option value="truck">Truck</option>
-        </select>
-        <input id="numPlate" type="text" placeholder="vehicle number">
-        <button id="entry" onclick="bookParking(event)">Enter</button>
-    </form>
-</div>
-    <br>
-   <div class="row">
-       <h2>Exit Form</h2>
-    <form action="">
-        <input id="token" type="text" placeholder="Token">
-        <select id="typeExit" name="" id="">
-            <option value="">Select</option>
-            <option value="car">Car</option>
-            <option value="bike">Bike</option>
-            <option value="truck">Truck</option>
-        </select>
-        <button id="exit" onclick="exitParking(event)">Exit</button>
-    </form>
-    <br>
-    <div class="parking">
-        <div>
-            <h3>Bike Parking </h3>
-            <h4>Rate: ₹ 10/2hr</h4>
-            <hr />
-            <p>Max Capacity = <span id="maxBike"></span></p>
-            <span>Availability &nbsp; = &nbsp; </span>
-            <span id="bikeNum"></span>
-
+        <div id="formDiv">
+            <div class="rowForm">
+                <h2>Entry Form</h2>
+                <form action="">
+                    <input id="user" type="text" placeholder="username"> </br>
+                    <select name="" id="type">
+                        <option>Select</option>
+                        <option value="car">Car</option>
+                        <option value="bike">Bike</option>
+                        <option value="truck">Truck</option>
+                    </select>
+                    </br>
+                    <input id="numPlate" type="text" placeholder="vehicle number"> </br>
+                    <button id="entry" onclick="bookParking(event)">Enter</button>
+                </form>
+            </div>
+            <br>
+            <div class="rowForm">
+                <h2>Exit Form</h2>
+                <form action="">
+                    <input id="token" type="text" placeholder="Token"> </br>
+                    <select id="typeExit" name="" id="">
+                        <option value="">Select</option>
+                        <option value="car">Car</option>
+                        <option value="bike">Bike</option>
+                        <option value="truck">Truck</option>
+                    </select> </br>
+                    <button id="exit" onclick="exitParking(event)">Exit</button>
+                </form>
+            </div>
         </div>
-        <div>
-            <h3>Car Parking </h3>
-            <h4>Rate: ₹ 40/2hr</h4>
-            <hr />
-            <p>Max Capacity = <span id="maxCar"></span></p>
-            <span>Availability &nbsp; = &nbsp; </span>
-            <span id="carNum"></span>
+        <br>
+        <div class="parking">
+            <div class="col-3">
+                <h3>Bike Parking </h3>
+                <h4>Rate: ₹ 10/2hr</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-2">
+                        <p>Max Capacity = <span id="maxBike"></span></p>
+                    </div>
+                    <div class="col-2">
+                        <p><span>Availability &nbsp; = &nbsp; </span>
+                            <span id="bikeNum"></span>
+                        </p>
+                    </div>
+                </div>
 
+            </div>
+            <div class="col-3">
+                <h3>Car Parking </h3>
+                <h4>Rate: ₹ 40/2hr</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-2">
+                        <p>Max Capacity = <span id="maxCar"></span></p>
+                    </div>
+                    <div class="col-2">
+                        <p><span>Availability &nbsp; = &nbsp; </span>
+                            <span id="carNum"></span>
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-3">
+                <h3>Truck Parking </h3>
+                <h4>Rate: ₹ 50/2hr</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-2">
+                        <p>Max Capacity = <span id="maxTruck"></span></p>
+                    </div>
+                    <div class="col-2">
+                        </p><span>Availability &nbsp; = &nbsp; </span>
+                        <span id="truckNum"></span></p>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Truck Parking </h3>
-            <h4>Rate: ₹ 50/2hr</h4>
-            <hr />
-            <p>Max Capacity = <span id="maxTruck"></span></p>
-            <span>Availability &nbsp; = &nbsp; </span>
-            <span id="truckNum"></span>
 
+        <div class="parkingSlot">
+            <div>
+                <h3>BikeZone</h3>
+                <div id="bikeZone" class="disp-3"></div>
+            </div>
+            <div>
+                <h3>CarZone</h3>
+                <div id="carZone" class="disp-3"></div>
+            </div>
+            <div>
+                <h3>TruckZone</h3>
+                <div id="truckZone" class="disp-3"></div>
+            </div>
         </div>
 
     </div>
-</div>
 
 </body>
 
@@ -111,7 +225,55 @@
     if (localStorage.getItem("parkingZone") == undefined) { setLocalStorage() }
 
     let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
-   
+    //----------bikeZone-----------------------// 
+    let bikeSlot = JSON.parse(localStorage.getItem("bikeSlot"));
+    let bikeDiv = document.getElementById("bikeZone");
+    for (let i = 0; i < bikeSlot.length; i++) {
+        let div = document.createElement("div");
+        div.setAttribute("id", `bike${i}`);
+        div.style.height = "150px";
+        div.style.background = "green";
+        div.style.border = "1px solid blue";
+        bikeZone.append(div)
+    }
+    //------------------CarZone--------------------//
+    let carSlot = JSON.parse(localStorage.getItem("carSlot"));
+    let carZone = document.getElementById("carZone");
+    for (let i = 0; i < carSlot.length; i++) {
+        let div = document.createElement("div");
+        div.setAttribute("id", `car${i}`);
+        div.style.height = "180px";
+        div.style.border = "1px solid blue";
+
+        if (carSlot[i].avail) {
+            div.style.background = "lightgreen";
+        } else {
+            div.style.background = "#F48FB1";
+            let img = document.createElement("img");
+            let p1 = document.createElement("p");
+            let p2 = document.createElement("p");
+            let p3 = document.createElement("p");
+            img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9_Ufdi1GXC8jqzaYdNkNjB9fO20dqTVSo8A&usqp=CAU";
+            p1.innerText = `user : ${carSlot[i].username}`;
+            p2.innerText = `veh_No. : ${carSlot[i].vehicle_No}`;          
+            div.append(img, p1, p2);
+        }
+        
+        carZone.append(div);
+    }
+
+    //-----------Truck-Zone----------------------------//
+    let truckSlot = JSON.parse(localStorage.getItem("truckSlot"));
+    let truckZone = document.getElementById("truckZone");
+    for (let i = 0; i < truckSlot.length; i++) {
+        let div = document.createElement("div");
+        div.setAttribute("id", `truck${i}`);
+        div.style.height = "150px";
+        div.style.background = "green";
+        div.style.border = "1px solid blue";
+        truckZone.append(div)
+    }
+
 
 
     let span1 = document.getElementById("bikeNum")
@@ -145,11 +307,11 @@
 
         console.log(user, type, numPlate)
 
-        if (type === "bike") { bookBikeParking(user,type,numPlate) }
+        if (type === "bike") { bookBikeParking(user, type, numPlate) }
 
-        else if (type === "car") { bookCarParking(user,type,numPlate) }
+        else if (type === "car") { bookCarParking(user, type, numPlate) }
 
-        else if (type === "truck") { bookTruckParking(user,type,numPlate) }
+        else if (type === "truck") { bookTruckParking(user, type, numPlate) }
 
         document.getElementById("user").value = "";
         document.getElementById('type').selectedIndex = 0;
@@ -157,7 +319,7 @@
     }
 
     //----------bike parking------------------------//
-    function bookBikeParking(user,type,numPlate) {      
+    function bookBikeParking(user, type, numPlate) {
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span1 = document.getElementById("bikeNum")
@@ -191,7 +353,7 @@
 
     //-----------Car Parking----------------------//
 
-    function bookCarParking(user,type,numPlate) {
+    function bookCarParking(user, type, numPlate) {
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span2 = document.getElementById("carNum")
@@ -214,6 +376,17 @@
                     localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
                     window.alert(`Hello ${user}! Thank you for parking your Car. your userToken = ${i}.`)
                     span2.innerText = parkingZone.car.avail;
+
+                    let div = document.getElementById(`car${i}`);
+                    div.style.background = "#F48FB1";
+                    let img = document.createElement("img");
+                    img.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9_Ufdi1GXC8jqzaYdNkNjB9fO20dqTVSo8A&usqp=CAU"
+
+                    let p1 = document.createElement("p");
+                    let p2 = document.createElement("p");
+                    p1.innerText = `user : ${user}`;
+                    p2.innerText = `veh_No. : ${numPlate}`;
+                    div.append(img, p1, p2);
                     break;
 
                 }
@@ -224,7 +397,7 @@
 
     //----------book Truck Parking------------------//
 
-    function bookTruckParking(user,type,numPlate) {
+    function bookTruckParking(user, type, numPlate) {
 
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span3 = document.getElementById("truckNum")
@@ -262,14 +435,14 @@
     function exitParking(e) {
         e.preventDefault();
         let token = document.getElementById("token").value;
-        let typeExit = document.getElementById("typeExit").value;       
+        let typeExit = document.getElementById("typeExit").value;
 
         if (typeExit === "bike") { exitBikeParking(token) }
         else if (typeExit === "car") { exitCarParking(token) }
         else if (typeExit === "truck") { exitTruckParking(token) }
 
-         document.getElementById("token").value = "";
-         document.getElementById("typeExit").selectedIndex = 0;        
+        document.getElementById("token").value = "";
+        document.getElementById("typeExit").selectedIndex = 0;
 
     }
 
@@ -279,6 +452,7 @@
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span1 = document.getElementById("bikeNum")
         let bikeSlot = JSON.parse(localStorage.getItem("bikeSlot"));
+        console.log("bike =", bikeSlot)
         let flag = true;
         for (let i = 0; i < bikeSlot.length; i++) {
             if (i > token) { break }
@@ -290,10 +464,10 @@
                     let rate = 10;
                     let exitTime = new Date().getTime();;
                     let diff = exitTime - bikeSlot[i].entry;
-                    console.log(exitTime,bikeSlot[i].entry)
-                    diff = (diff)/(1000*60*60);
+                    console.log(exitTime, bikeSlot[i].entry)
+                    diff = (diff) / (1000 * 60 * 60);
                     console.log(diff)
-                    diff = Math.ceil(diff/2)
+                    diff = Math.ceil(diff / 2)
                     let cost = rate * diff;
                     window.alert(`Hello ${bikeSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${bikeSlot[i].vehicle_No}`)
                     bikeSlot[i].avail = true;
@@ -301,17 +475,17 @@
                     bikeSlot[i].username = null;
                     bikeSlot[i].vehicle_No = null;
                     bikeSlot[i].entry = null;
-                    parkingZone.bike.avail = parkingZone.bike.avail + 1;                   
+                    parkingZone.bike.avail = parkingZone.bike.avail + 1;
                     localStorage.setItem("bikeSlot", JSON.stringify(bikeSlot));
-                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
-                    span1.innerText = parkingZone.bike.avail;                   
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    span1.innerText = parkingZone.bike.avail;
                     break;
                 }
 
             }
         }
-        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
-      
+        if (flag) { window.alert(`There is no Vehicle parked with this TokenID`) }
+
 
     }
 
@@ -333,8 +507,8 @@
                     let rate = 40;
                     let exitTime = new Date().getTime();;
                     let diff = exitTime - carSlot[i].entry;
-                    diff = (diff)/(1000*60*60);
-                    diff = Math.ceil(diff/2)
+                    diff = (diff) / (1000 * 60 * 60);
+                    diff = Math.ceil(diff / 2)
                     let cost = rate * diff;
                     window.alert(`Hello ${carSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${carSlot[i].vehicle_No}`)
                     carSlot[i].avail = true;
@@ -342,23 +516,27 @@
                     carSlot[i].username = null;
                     carSlot[i].vehicle_No = null;
                     carSlot[i].entry = null;
-                    parkingZone.car.avail = parkingZone.car.avail + 1;                   
+                    parkingZone.car.avail = parkingZone.car.avail + 1;
                     localStorage.setItem("carSlot", JSON.stringify(carSlot));
-                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
-                    span2.innerText = parkingZone.car.avail;                   
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    span2.innerText = parkingZone.car.avail;
+
+                    let div = document.getElementById(`car${i}`);
+                    div.style.background = "lightgreen";
+                    div.innerText = "Vaccant";                    
                     break;
                 }
 
             }
         }
-        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
-      
+        if (flag) { window.alert(`There is no Vehicle parked with this TokenID`) }
+
 
     }
 
     //-------------------exit truck parking------------------------//
-    
-     function exitTruckParking(token) {
+
+    function exitTruckParking(token) {
         let parkingZone = JSON.parse(localStorage.getItem("parkingZone"));
         let span3 = document.getElementById("truckNum")
         let truckSlot = JSON.parse(localStorage.getItem("truckSlot"));
@@ -373,8 +551,8 @@
                     let rate = 50;
                     let exitTime = new Date().getTime();;
                     let diff = exitTime - truckSlot[i].entry;
-                    diff = (diff)/(1000*60*60);
-                    diff = Math.ceil(diff/2)
+                    diff = (diff) / (1000 * 60 * 60);
+                    diff = Math.ceil(diff / 2)
                     let cost = rate * diff;
                     window.alert(`Hello ${truckSlot[i].username} Please pay ₹ ${cost} for your vehicle no.${truckSlot[i].vehicle_No}`)
                     truckSlot[i].avail = true;
@@ -382,17 +560,18 @@
                     truckSlot[i].username = null;
                     truckSlot[i].vehicle_No = null;
                     truckSlot[i].entry = null;
-                    parkingZone.truck.avail = parkingZone.truck.avail + 1;                   
+                    parkingZone.truck.avail = parkingZone.truck.avail + 1;
                     localStorage.setItem("truckSlot", JSON.stringify(truckSlot));
-                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));                  
-                    span3.innerText = parkingZone.truck.avail;                   
+                    localStorage.setItem("parkingZone", JSON.stringify(parkingZone));
+                    span3.innerText = parkingZone.truck.avail;
                     break;
                 }
 
             }
         }
-        if(flag) {window.alert(`There is no Vehicle parked with this TokenID`)}
-      
+
+        if (flag) { window.alert(`There is no Vehicle parked with this TokenID`) }
+
 
     }
 
