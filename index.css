@@ -92,7 +92,8 @@
         .disp-3 {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            border: 5px dashed salmon;
+            border: 5px dashed #F06292;
+            border-radius: 5px;
             height: 800px;
             overflow-y: auto;          
         }
